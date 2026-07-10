@@ -484,7 +484,7 @@
         .detail-header .action { font-size: 20px; color: #666; cursor: pointer; background: none; border: none; padding: 0; }
 
         .detail-carousel { position: relative; width: 100%; background: #f8f8f8; overflow: hidden; touch-action: pan-y; user-select: none; height: auto; }
-        .carousel-track { display: flex; height: 100%; will-change: transform; }
+        .carousel-track { display: flex; height: auto; will-change: transform; }
         .carousel-track .slide { flex: 0 0 100%; height: auto; display: flex; align-items: center; justify-content: center; background: #f8f8f8; }
         .carousel-track .slide img { width: 100%; height: auto; object-fit: contain; display: block; cursor: zoom-in; }
         .carousel-dots {
@@ -1020,8 +1020,8 @@
                 const images = product.images || [product.img];
                 const track = document.getElementById('carouselTrack');
                 track.innerHTML = images.map((img, idx) =>
-                    `<div class="slide"><img src="${img}" alt="${product.name}" loading="${idx===0?'eager':'lazy'}" draggable="false" onclick="event.stopPropagation(); openImagePreview('${img}')"></div>`
-                ).join('');
+    `<div class="slide"><img src="${img}" alt="${product.name}" loading="${idx===0?'eager':'lazy'}" draggable="false"></div>`
+).join('');
                 const dots = document.getElementById('carouselDots');
                 dots.innerHTML = images.map((_, i) =>
                     `<span class="dot ${i===0?'active':''}" data-index="${i}"></span>`
@@ -1070,40 +1070,49 @@
             });
 
             function initCarousel() {
-                const carousel = document.getElementById('detailCarousel');
-                const track = document.getElementById('carouselTrack');
-                let startX = 0, currentX = 0, isDragging = false, startTransform = 0;
+    const carousel = document.getElementById('detailCarousel');
+    const track = document.getElementById('carouselTrack');
+    let startX = 0, currentX = 0, isDragging = false, startTransform = 0;
 
-                carousel.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                    currentX = startX;
-                    isDragging = true;
-                    track.style.transition = 'none';
-                    const style = window.getComputedStyle(track);
-                    const matrix = new WebKitCSSMatrix(style.transform);
-                    startTransform = matrix.m41;
-                }, { passive: true });
+    carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        currentX = startX;
+        isDragging = true;
+        track.style.transition = 'none';
+        const style = window.getComputedStyle(track);
+        const matrix = new WebKitCSSMatrix(style.transform);
+        startTransform = matrix.m41;
+    }, { passive: true });
 
-                carousel.addEventListener('touchmove', (e) => {
-                    if (!isDragging) return;
-                    currentX = e.touches[0].clientX;
-                    track.style.transform = `translateX(${startTransform + (currentX - startX)}px)`;
-                }, { passive: true });
+    carousel.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+        track.style.transform = `translateX(${startTransform + (currentX - startX)}px)`;
+    }, { passive: true });
 
-                carousel.addEventListener('touchend', () => {
-                    if (!isDragging) return;
-                    isDragging = false;
-                    const delta = currentX - startX;
-                    const slides = track.querySelectorAll('.slide');
-                    const slideWidth = carousel.offsetWidth;
-                    let currentIndex = parseInt(track.dataset.index || '0');
-                    if (Math.abs(delta) > slideWidth * 0.2) {
-                        if (delta < 0) currentIndex = Math.min(currentIndex + 1, slides.length - 1);
-                        else currentIndex = Math.max(currentIndex - 1, 0);
-                    }
-                    goToSlide(currentIndex);
-                });
-            }
+    carousel.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        const delta = currentX - startX;
+        const slides = track.querySelectorAll('.slide');
+        const slideWidth = carousel.offsetWidth;
+        let currentIndex = parseInt(track.dataset.index || '0');
+        if (Math.abs(delta) > slideWidth * 0.2) {
+            if (delta < 0) currentIndex = Math.min(currentIndex + 1, slides.length - 1);
+            else currentIndex = Math.max(currentIndex - 1, 0);
+        }
+        goToSlide(currentIndex);
+    });
+
+    // 点击图片放大预览
+    carousel.addEventListener('click', (e) => {
+        const img = e.target.closest('img');
+        if (img) {
+            e.stopPropagation();
+            openImagePreview(img.src);
+        }
+    });
+}
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
