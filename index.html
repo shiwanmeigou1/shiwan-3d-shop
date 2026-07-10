@@ -483,10 +483,10 @@
         .detail-header .title { font-size: 16px; font-weight: 500; color: #222; }
         .detail-header .action { font-size: 20px; color: #666; cursor: pointer; background: none; border: none; padding: 0; }
 
-        .detail-carousel { position: relative; width: 100%; background: #f8f8f8; overflow: hidden; touch-action: pan-y; user-select: none; height: 45vh; }
+        .detail-carousel { position: relative; width: 100%; background: #f8f8f8; overflow: hidden; touch-action: pan-y; user-select: none; height: auto; }
         .carousel-track { display: flex; height: 100%; will-change: transform; }
-        .carousel-track .slide { flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f8f8f8; }
-        .carousel-track .slide img { width: 100%; height: 100%; object-fit: contain; display: block; cursor: zoom-in; }
+        .carousel-track .slide { flex: 0 0 100%; height: auto; display: flex; align-items: center; justify-content: center; background: #f8f8f8; }
+        .carousel-track .slide img { width: 100%; height: auto; object-fit: contain; display: block; cursor: zoom-in; }
         .carousel-dots {
             position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 8px; z-index: 5; background: rgba(0, 0, 0, 0.25);
