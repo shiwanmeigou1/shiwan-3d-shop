@@ -120,7 +120,7 @@
         .pay-amount { font-size: 30px; font-weight: 800; color: var(--primary-dark); margin: 6px 0 6px; }
         .order-id-display { text-align: center; margin-bottom: 12px; font-size: 14px; color: #666; }
         .order-id-display strong { color: var(--primary-dark); }
-        .qr-box { width: 180px; height: 180px; margin: 0 auto 14px; border: 2px solid var(--primary-light); border-radius: var(--radius-md); padding: 6px; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .qr-box { width: 220px; height: 220px; margin: 10px auto; padding: 0; border: none; }
         .qr-box img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
         .pay-tips { font-size: 12px; color: var(--text-sub); line-height: 1.8; margin-bottom: 18px; background: var(--secondary-light); padding: 12px 14px; border-radius: var(--radius-sm); text-align: left; }
         .pay-tips strong { color: var(--primary-dark); }
@@ -254,10 +254,11 @@
         <div class="pay-amount">¥ <span id="payAmount">0.00</span></div>
         <div class="order-id-display">订单号：<strong id="payOrderId"></strong></div>
         <div class="qr-box">
-            <img src="images/微信收款码1.png" alt="微信收款码">
+            <img src="images/qrcode.png" alt="微信收款码">
         </div>
         <div class="pay-tips">
             <strong>请长按识别二维码支付</strong><br>
+            如果无法识别，请<b>截图保存后</b>，用微信扫一扫从相册选择二维码<br>
             支付后请备注「姓名+电话」<br>
             满199元省内包邮，未满需补邮费<br>
             1-3个工作日内安排发货
@@ -329,13 +330,19 @@
             <button class="close-order" onclick="closeMyOrders()">✕</button>
         </div>
         <div id="myOrderList" style="overflow-y:auto;max-height:60vh;padding:0 10px;"></div>
-        <div style="padding:15px;text-align:center;color:#999;font-size:13px;">
-            ⚠️ 订单仅保存在当前设备<br>状态由管理员更新
+        <div style="padding:12px 15px; background: linear-gradient(135deg, #fff3cd, #ffe8a0); border-top:2px solid #f0c000; text-align:center; font-size:14px; color:#6b4e0a;">
+            <div style="font-weight:700; margin-bottom:6px;">📞 联系卖家确认订单</div>
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+                <span><strong>QQ：</strong>1506463</span>
+                <span><strong>微信：</strong>78609916</span>
+            </div>
+            <div style="margin-top:8px; font-size:12px; color:#999;">
+                ⚠️ 订单仅保存在当前设备，状态由管理员更新
+            </div>
         </div>
     </div>
 
     <script>
-        // ==================== 全局函数提前声明 ====================
         const STATUS_FILE_URL = 'https://raw.githubusercontent.com/shiwanmeigou1/shiwan-3d-shop/refs/heads/main/orders_status.json';
         async function fetchOrderStatuses() {
             try {
@@ -387,7 +394,6 @@
         }
 
         (function() {
-            // ==================== 商品数据 ====================
             const products = [
                 {
                                 "id": 1,
@@ -590,8 +596,7 @@
             }
             function closeDetail(shouldUnlock=true) { detailPage.classList.remove('show'); currentDetailId=null; closeImagePreview(); if(carouselAbortController){carouselAbortController.abort();carouselAbortController=null;} if(shouldUnlock && !isAnyModalOpen()) unlockBody(); }
             function goToSlide(index) { const track=document.getElementById('carouselTrack'); const slides=track.querySelectorAll('.slide'); if(!slides.length) return; if(index<0) index=0; if(index>=slides.length) index=slides.length-1; track.dataset.index=index; track.style.transform=`translateX(-${index*100}%)`; document.querySelectorAll('#carouselDots .dot').forEach((d,i)=>d.classList.toggle('active',i===index)); }
-            function getTransformX(el) { const style=window.getComputedStyle(el); const matrix=style.transform||style.webkitTransform||'none'; if(matrix==='none') return 0; const match=matrix.match(/matrix\((.+?)\)/); if(!match) return 0; const values=match[1].split(',').map(v=>parseFloat(v.trim())); return values[4]||0; }
-            function initCarousel() { /* 保留原有轮播逻辑 */ }
+            function initCarousel() { /* 轮播逻辑已内置 */ }
 
             // 事件绑定
             document.getElementById('categoryWrap').addEventListener('click', e => { const item=e.target.closest('.category-item'); if(!item) return; $$('.category-item').forEach(i=>i.classList.remove('active')); item.classList.add('active'); currentCategory=item.dataset.cate; renderProducts(); productsGrid.scrollIntoView({behavior:'smooth'}); });
