@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "name": "招财猫桌面摆件 · 3D打印",
+    "price": 68.0,
+    "category": "decor",
+    "tag": "爆款",
+    "img": "images/img_1f81fe33.jpg",
+    "images": [
+      "images/img_8e6673bb.jpg",
+      "images/img_1e9f4393.jpg",
+      "images/img_9287fa50.jpg",
+      "images/img_277d9be4.jpg"
+    ],
+    "params": {
+      "材质": "PLA环保塑料",
+      "尺寸": "约8×6×10cm"
+    },
+    "detail": "可爱招财猫造型..."
+  },
+  {
+    "id": 2,
+    "name": "新商品1",
+    "price": 199.0,
+    "category": "decor",
+    "tag": "非常热销！",
+    "img": "images/img_f3423229.jpg",
+    "images": [
+      "images/img_4556cb7f.jpg",
+      "images/img_f9fc723e.jpg",
+      "images/img_5e52a988.jpg",
+      "images/img_019c73f2.jpg"
+    ],
+    "params": {
+      "材质": "PLA环保塑料",
+      "尺寸": "约8×6×10cm"
+    },
+    "detail": "测试商品"
+  }
+]
