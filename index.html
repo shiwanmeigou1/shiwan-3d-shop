@@ -336,7 +336,7 @@
 
     <script>
         // ==================== 全局函数提前声明 ====================
-        const STATUS_FILE_URL = 'orders_status.json';
+        const STATUS_FILE_URL = 'https://raw.githubusercontent.com/shiwanmeigou1/shiwan-3d-shop/refs/heads/main/orders_status.json';
         async function fetchOrderStatuses() {
             try {
                 const resp = await fetch(STATUS_FILE_URL + '?t=' + Date.now());
